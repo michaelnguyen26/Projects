@@ -1,0 +1,3 @@
+- 👋 Hi, I’m @michaelnguyen26
+- 👀 I’m interested in neural networks, machine learning, and AI
+- 🌱 I’m currently learning Python and Java
