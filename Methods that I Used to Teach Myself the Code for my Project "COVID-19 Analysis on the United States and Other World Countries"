@@ -1,28 +1,21 @@
-mport numpy as np
+import numpy as np
 import matplotlib.pyplot as py 
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import *
 from termcolor import colored 
 
-
-# # Loading in COVID-19 Data (Source: Our World in Data)
-
-# In[ ]:
+# Loading in COVID-19 Data (Source: Our World in Data)
 
 
 covidData = pd.read_csv("owid-covid-data(updated).csv", delimiter = ",")
 
 
-# In[ ]:
-
 
 covidData.tail()
 
 
-# # Assigning Variables and Figuring Out Where the U.S. is Located
-
-# In[ ]:
+# Assigning Variables and Figuring Out Where the U.S. is Located
 
 
 totalcases = covidData['total_cases']
@@ -32,16 +25,10 @@ print(totalcases.tail(),'\n')
 print(newcases.tail())
 
 
-# In[ ]:
-
-
 usData = np.where(covidData['location'] == 'United States')
 
 np.shape(usData)
 usData
-
-
-# In[ ]:
 
 
 print(covidData.iloc[27523], "\n")
@@ -49,9 +36,7 @@ print(covidData.iloc[27523], "\n")
 print(covidData.iloc[27523,4])  #Exctracting data using integer based values at the last known date and fourth column for cases
 
 
-# # Developing an Algorithm for Finding the Total Cases in the U.S. and Extracting the Formatted Date
-
-# In[ ]:
+# Developing an Algorithm for Finding the Total Cases in the U.S. and Extracting the Formatted Date
 
 
 usCases = np.zeros(np.size(usData))
@@ -67,7 +52,6 @@ for i in range(np.size(usData)):
 print(usCases[-1])
 
 
-# In[ ]:
 
 
 date = pd.to_datetime(covidData['date'], format = '%Y-%m-%d')
@@ -76,9 +60,8 @@ CasesByYear = date[27333:27524]
 print(CasesByYear)
 
 
-# # Visualizing the Data through an Interactive Model
+# Visualizing the Data through an Interactive Model
 
-# In[ ]:
 
 
 fig = go.Figure()
@@ -91,10 +74,7 @@ fig.update_layout(legend_title_text='Trend',showlegend=True, title="Total COVID-
 
 fig.show()
 
-
-# # Part 2: Comparing the Total Cases with Total Deaths
-
-# In[ ]:
+# Part 2: Comparing the Total Cases with Total Deaths
 
 
 usData = np.where(covidData['location'] == 'United States')
@@ -103,16 +83,11 @@ np.size(usData)
 np.reshape(usData,(np.size(usData),1))
 
 
-# In[ ]:
-
-
 covidData.iloc[27523,6] #Integer based indexing within the covidData array that was loaded through Pandas. The number
                         #six was chosen for the sixth position where total_deaths is located.
 
 
-# # Utilizing the Same Algorithm Above and Manipulating the Change in Integer Position
-
-# In[ ]:
+# Utilizing the Same Algorithm Above and Manipulating the Change in Integer Position
 
 
 usDeaths = np.zeros(np.size(usData))
@@ -128,9 +103,7 @@ for i in range(np.size(usData)):
 print(usDeaths[-1])
 
 
-# # Data Visualization through an Interactive Model
-
-# In[ ]:
+# Data Visualization through an Interactive Model
 
 
 fig = go.Figure()
@@ -144,16 +117,12 @@ fig.update_layout(legend_title_text='Trend',showlegend=True, title="Total COVID-
 fig.show()
 
 
-# # What is the Death Rate in the United States? (as of June 20, 2020)
+# What is the Death Rate in the United States? (as of June 20, 2020)
 
-# In[ ]:
 
 
 totalLastCases = covidData.iloc[27523,4] #Integer based indexing to find total cases as of July 8, 2020.
 totalLastDeaths = covidData.iloc[27523,6] #Integer based indexing to find total deaths as of July 8, 2020.
-
-
-# In[ ]:
 
 
 usPercentage = (totalLastDeaths/totalLastCases)*100 #The ratio needed to find how many deaths per case.
@@ -162,18 +131,13 @@ print('The percentage of deaths in the United States due to COVID-19 has roughly
       .format(usPercentage)) #Format method keeps sentence structure clean and easier to read.
 
 
-# # Part 3: Comparing the U.S. Cases and Deaths with World Countries
-
-# In[ ]:
+# Part 3: Comparing the U.S. Cases and Deaths with World Countries
 
 
 chinaData = np.where(covidData['location'] == 'China')
 
 print(np.shape(chinaData))
 chinaData
-
-
-# In[ ]:
 
 
 chinaCases = np.zeros(np.size(chinaData))
@@ -189,8 +153,6 @@ for i in range(np.size(chinaData)):
 print(chinaCases[-1])
 
 
-# In[ ]:
-
 
 date = pd.to_datetime(covidData['date'], format = '%Y-%m-%d')
 CasesByYear = date[27333:27524]
@@ -198,10 +160,7 @@ CasesByYear = date[27333:27524]
 print(CasesByYear)
 
 
-# # Convert Time Series into an Array
-
-# In[ ]:
-
+# Convert Time Series into an Array
 
 arrayTime = CasesByYear.dt.to_pydatetime() #.dt.to_pydatetime converts the time series into an array of time
 
@@ -210,17 +169,11 @@ print(arrayTime[0:5])
 
 # # Adding in the Other Countries
 
-# In[ ]:
-
 
 ukData = np.where(covidData['location'] == 'United Kingdom')
 
 print(np.shape(ukData))
 ukData
-
-
-# In[ ]:
-
 
 ukCases = np.zeros(np.size(ukData))
 u = 0
@@ -235,17 +188,10 @@ for i in range(np.size(ukData)):
 print(ukCases[-1])
 
 
-# In[ ]:
-
-
 brazilData = np.where(covidData['location'] == 'Brazil')
 
 print(np.shape(brazilData))
 brazilData
-
-
-# In[ ]:
-
 
 brazilCases = np.zeros(np.size(brazilData))
 br = 0
@@ -260,16 +206,10 @@ for i in range(np.size(brazilData)):
 print(brazilCases[-1])
 
 
-# In[ ]:
-
-
 norwayData = np.where(covidData['location'] == 'Norway')
 
 print(np.shape(norwayData))
 norwayData
-
-
-# In[ ]:
 
 
 norwayCases = np.zeros(np.size(norwayData))
@@ -285,9 +225,7 @@ for i in range(np.size(norwayData)):
 print(norwayCases[-1])
 
 
-# # Data Visualization
-
-# In[ ]:
+# Data Visualization
 
 
 fig = py.figure(figsize=(12,10))
@@ -307,9 +245,6 @@ axis1.set_title("COVID-19 Cases vs. Time")
 axis1.legend()
 
 
-# In[ ]:
-
-
 fig = go.Figure()
 
 fig.add_trace(go.Scatter(x=CasesByYear, y=usCases,name="U.S."))
@@ -326,10 +261,7 @@ fig.update_layout(legend_title_text='Country',showlegend=True,
 fig.show()
 
 
-# # Now, Let's Take a Look at the Death Rate of these Countries
-
-# In[ ]:
-
+# Now, Let's Take a Look at the Death Rate of these Countries
 
 usDeaths = np.zeros(np.size(usData))
 d = 0
