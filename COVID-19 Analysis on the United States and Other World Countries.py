@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # COVID-19 Analysis: Open Source Data Provided by Our World in Data
-# # The data has been designed to update from the server host 
-# # Program and analysis was completed by Michael Nguyen on June 26, 2020
+# COVID-19 Analysis: Open Source Data Provided by Our World in Data
+# The data has been designed to update from the website download.
+# Program and analysis was completed by Michael Nguyen on June 26, 2020
 
 
 # Part 1: Developing an Algorithm to Find the Cases in a Chosen Country with User Decision Structures
