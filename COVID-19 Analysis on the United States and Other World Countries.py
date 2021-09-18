@@ -51,7 +51,7 @@ def covid19_tracker():
             os.remove('owid-covid-data.csv')               #delete the file.
 
         print(color.UNDERLINE+color.BOLD+'Loading program and retrieving data from server:\n'+color.END)
-        wget.download(url_data, '/Users/nguye/Desktop/Programming Projects/Python Projects')  #download the new file with url
+        wget.download(url_data, '/Users/Desktop')  #download the new file with url
         
         print('\n')
         
@@ -709,8 +709,9 @@ def covid19_tracker():
                   'of the countries you have chosen was either misspelled or is not listed in the records of data and cannot be displayed. Please re-run the program and check for spelling errors.')
 
 
-# In[3]:
-
+            
+            
+# Call Function
 
 covid19_tracker()
 
