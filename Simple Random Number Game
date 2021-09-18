@@ -1,4 +1,4 @@
- import random as rd 
+import random as rd 
  
 games = 0
 wins = 0
