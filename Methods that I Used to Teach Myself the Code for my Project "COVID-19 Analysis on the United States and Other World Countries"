@@ -1,0 +1,489 @@
+mport numpy as np
+import matplotlib.pyplot as py 
+import pandas as pd
+import plotly.graph_objects as go
+from datetime import *
+from termcolor import colored 
+
+
+# # Loading in COVID-19 Data (Source: Our World in Data)
+
+# In[ ]:
+
+
+covidData = pd.read_csv("owid-covid-data(updated).csv", delimiter = ",")
+
+
+# In[ ]:
+
+
+covidData.tail()
+
+
+# # Assigning Variables and Figuring Out Where the U.S. is Located
+
+# In[ ]:
+
+
+totalcases = covidData['total_cases']
+newcases = covidData['new_cases']
+
+print(totalcases.tail(),'\n')
+print(newcases.tail())
+
+
+# In[ ]:
+
+
+usData = np.where(covidData['location'] == 'United States')
+
+np.shape(usData)
+usData
+
+
+# In[ ]:
+
+
+print(covidData.iloc[27523], "\n")
+
+print(covidData.iloc[27523,4])  #Exctracting data using integer based values at the last known date and fourth column for cases
+
+
+# # Developing an Algorithm for Finding the Total Cases in the U.S. and Extracting the Formatted Date
+
+# In[ ]:
+
+
+usCases = np.zeros(np.size(usData))
+n = 0
+
+for i in range(np.size(usData)):
+    nCases = covidData.iloc[27333+n,4]
+    usCases[i] = nCases     
+    n += 1
+    if n == np.size(usData):
+        break 
+
+print(usCases[-1])
+
+
+# In[ ]:
+
+
+date = pd.to_datetime(covidData['date'], format = '%Y-%m-%d')
+CasesByYear = date[27333:27524]
+
+print(CasesByYear)
+
+
+# # Visualizing the Data through an Interactive Model
+
+# In[ ]:
+
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=CasesByYear, y=usCases,name="U.S. Cases"))
+fig.update_xaxes(rangeslider_visible=True)
+fig.update_layout(legend_title_text='Trend',showlegend=True, title="Total COVID-19 Cases in the U.S. from Dec 2020 to July 2020", 
+                  xaxis_title="Time (months and days)", yaxis_title="COVID-19 Cases",
+                  font=dict(family="Courier New, monospace",size=14, color="#7f7f7f"))
+
+fig.show()
+
+
+# # Part 2: Comparing the Total Cases with Total Deaths
+
+# In[ ]:
+
+
+usData = np.where(covidData['location'] == 'United States')
+
+np.size(usData)
+np.reshape(usData,(np.size(usData),1))
+
+
+# In[ ]:
+
+
+covidData.iloc[27523,6] #Integer based indexing within the covidData array that was loaded through Pandas. The number
+                        #six was chosen for the sixth position where total_deaths is located.
+
+
+# # Utilizing the Same Algorithm Above and Manipulating the Change in Integer Position
+
+# In[ ]:
+
+
+usDeaths = np.zeros(np.size(usData))
+d = 0
+
+for i in range(np.size(usData)):
+    nDeaths = covidData.iloc[27333+d,6]
+    usDeaths[i] = nDeaths     
+    d += 1
+    if d == np.size(usData):
+        break 
+
+print(usDeaths[-1])
+
+
+# # Data Visualization through an Interactive Model
+
+# In[ ]:
+
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=CasesByYear, y=usDeaths,name="Rising Deaths"))
+fig.update_xaxes(rangeslider_visible=True)
+fig.update_layout(legend_title_text='Trend',showlegend=True, title="Total COVID-19 Deaths in the U.S. from Dec 2020 to July 2020", 
+                  xaxis_title="Time (months and days)", yaxis_title="COVID-19 Deaths",
+                  font=dict(family="Courier New, monospace",size=14, color="#7f7f7f"))
+
+fig.show()
+
+
+# # What is the Death Rate in the United States? (as of June 20, 2020)
+
+# In[ ]:
+
+
+totalLastCases = covidData.iloc[27523,4] #Integer based indexing to find total cases as of July 8, 2020.
+totalLastDeaths = covidData.iloc[27523,6] #Integer based indexing to find total deaths as of July 8, 2020.
+
+
+# In[ ]:
+
+
+usPercentage = (totalLastDeaths/totalLastCases)*100 #The ratio needed to find how many deaths per case.
+
+print('The percentage of deaths in the United States due to COVID-19 has roughly a {0:.2f}% mortality rate.'
+      .format(usPercentage)) #Format method keeps sentence structure clean and easier to read.
+
+
+# # Part 3: Comparing the U.S. Cases and Deaths with World Countries
+
+# In[ ]:
+
+
+chinaData = np.where(covidData['location'] == 'China')
+
+print(np.shape(chinaData))
+chinaData
+
+
+# In[ ]:
+
+
+chinaCases = np.zeros(np.size(chinaData))
+c = 0
+
+for i in range(np.size(chinaData)):
+    cCases = covidData.iloc[5535+c,4]
+    chinaCases[i] = cCases     
+    c += 1
+    if c == np.size(chinaData):
+        break 
+
+print(chinaCases[-1])
+
+
+# In[ ]:
+
+
+date = pd.to_datetime(covidData['date'], format = '%Y-%m-%d')
+CasesByYear = date[27333:27524]
+
+print(CasesByYear)
+
+
+# # Convert Time Series into an Array
+
+# In[ ]:
+
+
+arrayTime = CasesByYear.dt.to_pydatetime() #.dt.to_pydatetime converts the time series into an array of time
+
+print(arrayTime[0:5])
+
+
+# # Adding in the Other Countries
+
+# In[ ]:
+
+
+ukData = np.where(covidData['location'] == 'United Kingdom')
+
+print(np.shape(ukData))
+ukData
+
+
+# In[ ]:
+
+
+ukCases = np.zeros(np.size(ukData))
+u = 0
+
+for i in range(np.size(ukData)):
+    uCases = covidData.iloc[27142+u,4]
+    ukCases[i] = uCases     
+    u += 1
+    if u == np.size(ukData):
+        break 
+
+print(ukCases[-1])
+
+
+# In[ ]:
+
+
+brazilData = np.where(covidData['location'] == 'Brazil')
+
+print(np.shape(brazilData))
+brazilData
+
+
+# In[ ]:
+
+
+brazilCases = np.zeros(np.size(brazilData))
+br = 0
+
+for i in range(np.size(brazilData)):
+    brCases = covidData.iloc[3718+br,4]
+    brazilCases[i] = brCases     
+    br += 1
+    if br == np.size(brazilData):
+        break 
+
+print(brazilCases[-1])
+
+
+# In[ ]:
+
+
+norwayData = np.where(covidData['location'] == 'Norway')
+
+print(np.shape(norwayData))
+norwayData
+
+
+# In[ ]:
+
+
+norwayCases = np.zeros(np.size(norwayData))
+nor = 0
+
+for i in range(np.size(norwayData)):
+    norCases = covidData.iloc[19558+nor,4]
+    norwayCases[i] = norCases     
+    nor += 1
+    if nor == np.size(norwayData):
+        break 
+
+print(norwayCases[-1])
+
+
+# # Data Visualization
+
+# In[ ]:
+
+
+fig = py.figure(figsize=(12,10))
+fontsize = 10
+
+axis1 = fig.add_subplot(1,1,1) #(rows,columns, plot position)
+axis1.plot(arrayTime, usCases, 'y-', linewidth=2, label = "Total Confirmed Cases in the U.S.")
+axis1.plot(arrayTime, chinaCases, 'r-', linewidth=2, label = "Total Confirmed Cases in China")
+axis1.plot(arrayTime, ukCases, 'g-', linewidth=2, label = "Total Confirmed Cases in the United Kingdom")
+axis1.plot(arrayTime, brazilCases, 'k-', linewidth=2, label = "Total Confirmed Cases in Brazil")
+axis1.plot(arrayTime, norwayCases, 'c-', linewidth=2, label = "Total Confirmed Cases in Norway")
+
+axis1.set_ylabel("Total Cases")
+axis1.set_xlabel("Time (months and days)")
+axis1.tick_params(labelsize=fontsize)
+axis1.set_title("COVID-19 Cases vs. Time")
+axis1.legend()
+
+
+# In[ ]:
+
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=CasesByYear, y=usCases,name="U.S."))
+fig.add_trace(go.Scatter(x=CasesByYear, y=chinaCases,name="China"))
+fig.add_trace(go.Scatter(x=CasesByYear, y=ukCases,name=" United Kingdom"))
+fig.add_trace(go.Scatter(x=CasesByYear, y=brazilCases,name="Brazil"))
+fig.add_trace(go.Scatter(x=CasesByYear, y=norwayCases,name="Norway"))
+
+fig.update_xaxes(rangeslider_visible=True)
+fig.update_layout(legend_title_text='Country',showlegend=True, 
+                  title="Total COVID-19 Cases from Dec 31, 2020 to July 8, 2020", 
+                  xaxis_title="Time (months and days)", yaxis_title="COVID-19 Cases",
+                  font=dict(family="Courier New, monospace",size=14, color="#7f7f7f"))
+fig.show()
+
+
+# # Now, Let's Take a Look at the Death Rate of these Countries
+
+# In[ ]:
+
+
+usDeaths = np.zeros(np.size(usData))
+d = 0
+
+for i in range(np.size(usData)):
+    nDeaths = covidData.iloc[27333+d,6]
+    usDeaths[i] = nDeaths     
+    d += 1
+    if d == np.size(usData):
+        break 
+
+print(usDeaths[-1])
+
+
+# In[ ]:
+
+
+chinaDeaths = np.zeros(np.size(chinaData))
+d1 = 0
+
+for i in range(np.size(chinaData)):
+    d1Deaths = covidData.iloc[5535+d1,6]
+    chinaDeaths[i] = d1Deaths     
+    d1 += 1
+    if d1 == np.size(chinaData):
+        break 
+
+print(chinaDeaths[-1])
+
+
+# In[ ]:
+
+
+ukDeaths = np.zeros(np.size(ukData))
+d2 = 0
+
+for i in range(np.size(ukData)):
+    d2Deaths = covidData.iloc[27142+d2,6]
+    ukDeaths[i] = d2Deaths     
+    d2 += 1
+    if d2 == np.size(ukData):
+        break 
+
+print(ukDeaths[-1])
+
+
+# In[ ]:
+
+
+brazilDeaths = np.zeros(np.size(brazilData))
+d3 = 0
+
+for i in range(np.size(brazilData)):
+    d3Deaths = covidData.iloc[3718+d3,6]
+    brazilDeaths[i] = d3Deaths     
+    d3 += 1
+    if d3 == np.size(brazilData):
+        break 
+
+print(brazilDeaths[-1])
+
+
+# In[ ]:
+
+
+norwayDeaths = np.zeros(np.size(norwayData))
+d5 = 0
+
+for i in range(np.size(norwayData)):
+    d5Deaths = covidData.iloc[19558+d5,6]
+    norwayDeaths[i] = d5Deaths     
+    d5 += 1
+    if d5 == np.size(norwayData):
+        break 
+
+print(norwayDeaths[-1])
+
+
+# In[ ]:
+
+
+fig = py.figure(figsize=(12,10))
+fontsize = 10
+
+axis1 = fig.add_subplot(1,1,1) #(rows,columns, plot position)
+axis1.plot(CasesByYear, usDeaths, 'y-', linewidth=2, label = "Deaths in the U.S.")
+axis1.plot(CasesByYear, chinaDeaths, 'r-', linewidth=2, label = "Deaths in China")
+axis1.plot(CasesByYear, ukDeaths, 'g-', linewidth=2, label = "Deaths in the United Kingdom")
+axis1.plot(CasesByYear, brazilDeaths, 'k-', linewidth=2, label = "Deaths in Brazil")
+axis1.plot(CasesByYear, norwayDeaths, 'c-', linewidth=2, label = "Deaths in Norway")
+
+axis1.set_ylabel("Total Deaths")
+axis1.set_xlabel("Time (months and days)")
+axis1.tick_params(labelsize=fontsize)
+axis1.set_title("COVID-19 Deaths vs. Time")
+axis1.legend()
+
+
+# In[ ]:
+
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=CasesByYear, y=usDeaths,name="U.S."))
+fig.add_trace(go.Scatter(x=CasesByYear, y=chinaDeaths,name="China"))
+fig.add_trace(go.Scatter(x=CasesByYear, y=ukDeaths,name="United Kingdom"))
+fig.add_trace(go.Scatter(x=CasesByYear, y=brazilDeaths,name="Brazil"))
+fig.add_trace(go.Scatter(x=CasesByYear, y=norwayDeaths,name="Norway"))
+
+fig.update_xaxes(rangeslider_visible=True)
+fig.update_layout(legend_title_text='Country',showlegend=True, 
+                  title="Total COVID-19 Deaths from Dec 31, 2020 to July 8, 2020", 
+                  xaxis_title="Time (months and days)", yaxis_title="COVID-19 Deaths",
+                  font=dict(family="Courier New, monospace",size=14, color="#7f7f7f"))
+fig.show()
+
+
+# # What is the Mortality Rate of these Countries and How Does it Compare to the United States?
+
+# In[ ]:
+
+
+#China
+mortalityChina = (covidData.iloc[5725,6]/covidData.iloc[5725,4])*100
+
+#Brazil
+mortalityBrazil = (covidData.iloc[3908,6]/covidData.iloc[3908,4])*100
+
+#United Kingdom
+mortalityUnitedKingdom = (covidData.iloc[27332,6]/covidData.iloc[27332,4])*100
+
+#Norway
+mortalityNorway = (covidData.iloc[19748,6]/covidData.iloc[19748,4])*100
+
+
+# In[ ]:
+
+
+print('Reminder: The percentage of deaths in the United States due to COVID-19 has roughly a',
+      colored('{0:.2f}%'.format(usPercentage),'blue',attrs=['bold']),'mortality rate.\n') 
+
+print('1) The mortality rate in China is',colored('{0:.2f}%\n'.format(mortalityChina),'red',attrs=['bold']))
+
+print('2) The mortaility rate in Brazil is',colored('{0:.2f}%\n'.format(mortalityBrazil),'green',attrs=['bold']))
+
+print('3) The mortality rate in the United Kingdom is',colored('{0:.2f}%\n'.format(mortalityUnitedKingdom),'magenta',attrs=['bold']))
+
+print('4) The mortality rate in Norway is',colored('{0:.2f}%'.format(mortalityNorway),'cyan',attrs=['bold']))
+
+
+# In[ ]:
+
+
+averageMortality = float((mortalityChina+mortalityBrazil+mortalityUnitedKingdom+mortalityNorway+usPercentage)/5)
+
+print('The average mortality rate between these five countries is',
+      colored('{0:.2f}%.'.format(averageMortality),'red',attrs=['bold']))
