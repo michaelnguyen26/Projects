@@ -1,36 +1,3 @@
-# android-retrofit-tutorial
-
-This tutorial/lab aims to provide hands-on experience of building an Android app that retrieves and displays data with REST API. We will first introduce how to:
-
-1. Use [Retrofit](https://square.github.io/retrofit/) to retrieve data of single movie from [The Movie DB](https://www.themoviedb.org/) and display the data in an Activity.
-2. Use [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview) to display a list of textual data
-
-You will then be asked to modify the provided classes to show a list of top-rated movies, as illustrated below.
-
-
-
-![lab3-resized](lab3-resized.gif)
-
-
-
-This tutorial assumes that you know some [Android basics](https://developer.android.com/training/basics/firstapp) such as Activities and layouts, and able to create a simple Android app with Android Studio.
-
-
-
-## Running the Source Code
-
-1. To run the tutorial code, you need an API key from The Movie DB. Follow [this instruction](https://developers.themoviedb.org/3/getting-started/introduction) to create an account on The Movie DB and get your API key.
-
-2. `git clone` this project, and import it with Android Studio. Replace `"YOUR_API_KEY"` in `MainActivity.java` with your API key. Run the app on an emulator (it is tested on Android 8.1 (API Level 27), but should work fine with API 23+)
-
-3. Once the app is running, you will see movie data displayed on the main screen. The "Program List" button leads you to `ProgramListActivity` that displays a list of strings using `RecyclerView`. The "Movie List" button leads you to `MovieListActivity` that you are asked to finish in this lab.
-
-   
-
-![lab3-1-resized](lab3-1-resized.gif)
-
-
-
 ## Using Retrofit to Retrieve and Display Data with REST API
 
 The required data of single movie can be retrieved by the following REST API:
