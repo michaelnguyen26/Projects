@@ -1,8 +1,8 @@
 # Executing the Program: 
 
-1) Using the terminal, CMD, etc., 
+1) Use the terminal, CMD, etc.
 * Exectue cd <your_directory>/System A
-                  OR
+                  
 * Exectue cd <your_directory>/System B
 
 2) Execute javac *.java
