@@ -1,6 +1,6 @@
-Executing the Program:
+# Executing the Program:
 
-1) In your current working directory, execute ---> cd Lab_2
+1) In your current working directory, execute ---> cd Implicit Invocation
 
 
 NOTE: Deprecated warnings will appear here at Step 2; however, it is okay!
